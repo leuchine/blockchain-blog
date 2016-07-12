@@ -75,7 +75,9 @@ In practice, the signature is usually implemented as private-public key encrypti
 3. *isValid := verify(pk, message, sig)* The verify method takes a message, a signature, and a public key as input. It returns a boolean value, *isValid*, that will be true if *sig* is a valid signature for message under public key *pk*, and false otherwise.
 
 We require that the following two properties hold:
+
 1. Valid signatures must verify: *verify(pk, message, sign(sk, message))== true*
+
 2. Signatures are existentially unforgeable
 
 With signature, the receiver of the message can verify the validity. 

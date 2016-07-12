@@ -81,8 +81,15 @@ In practice, the signature is usually implemented as private-public key encrypti
 
 
 We require that the following two properties hold:
-1. Valid signatures must verify: verify(pk, message, sign(sk, message))== true
-2. Signatures are existentially unforgeable
+
+
+  
+    Valid signatures must verify: verify(pk, message, sign(sk, message))== true
+  
+  
+    Signatures are existentially unforgeable
+  
+
 
 With signature, the receiver of the message can verify the validity.
 
@@ -245,9 +252,16 @@ Given the building blocks of blockchain and bitcoin, in next post, we will intro
   <li><em>isValid := verify(pk, message, sig)</em> The verify method takes a message, a signature, and a public key as input. It returns a boolean value, <em>isValid</em>, that will be true if <em>sig</em> is a valid signature for message under public key <em>pk</em>, and false otherwise.</li>
 </ol>
 
-<p>We require that the following two properties hold:<br />
-1. Valid signatures must verify: <em>verify(pk, message, sign(sk, message))== true</em><br />
-2. Signatures are existentially unforgeable</p>
+<p>We require that the following two properties hold:</p>
+
+<ol>
+  <li>
+    <p>Valid signatures must verify: <em>verify(pk, message, sign(sk, message))== true</em></p>
+  </li>
+  <li>
+    <p>Signatures are existentially unforgeable</p>
+  </li>
+</ol>
 
 <p>With signature, the receiver of the message can verify the validity.</p>
 
