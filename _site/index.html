@@ -148,15 +148,19 @@
 <h5 id="merkle-trees">2.2.2 Merkle trees</h5>
 <p>Another useful data structure that we can build using hash pointers is a binary tree. A binary tree with hash pointers is known as a Merkle tree, after its inventor Ralph Merkle. Suppose we have a number of blocks containing data. These blocks comprise the leaves of our tree. We group these data blocks into pairs of two, and then for each pair, we build a data structure that has two hash pointers, one to each of these blocks. These data structures make the next level up of the tree. We in turn group these into groups of two, and for each pair, create a new data structure that contains the hash of each. We continue doing this until we reach a single block, the root of the tree. For example, suppose we have three data blocks, <em>a, b, c</em>. We can generate a merkle tree by doing the following steps:</p>
 
-<p><em>d1 = dhash(a)</em><br />
-<em>d2 = dhash(b)</em><br />
-<em>d3 = dhash(c)</em><br />
-<em>d4 = dhash(c)</em> <em>#since we have odd number of blocks, we append it with another c</em></p>
+<p><em>d1 = dhash(a)</em></p>
 
-<p><em>d5 = dhash(d1 concat d2)</em><br />
-<em>d6 = dhash(d3 concat d4)</em></p>
+<p><em>d2 = dhash(b)</em></p>
 
-<p><em>d7 = dhash(d5 concat d6)</em></p>
+<p><em>d3 = dhash(c)</em></p>
+
+<p><em>d4 = dhash(c)</em> <em>#since we have odd number of blocks, we append it with another c</em></p>
+
+<p><em>d5 = dhash(d1 ‖ d2)</em></p>
+
+<p><em>d6 = dhash(d3 ‖ d4)</em></p>
+
+<p><em>d7 = dhash(d5 ‖ d6)</em></p>
 
 <p>Here is graphical example of merkle tree with 8 data blocks.<br />
 <img src="/images/post1/merkle.png" width="500" height="300" /></p>

@@ -51,14 +51,18 @@ This structures have the property that it is a tamper-evident log, i.e., if the 
 Another useful data structure that we can build using hash pointers is a binary tree. A binary tree with hash pointers is known as a Merkle tree, after its inventor Ralph Merkle. Suppose we have a number of blocks containing data. These blocks comprise the leaves of our tree. We group these data blocks into pairs of two, and then for each pair, we build a data structure that has two hash pointers, one to each of these blocks. These data structures make the next level up of the tree. We in turn group these into groups of two, and for each pair, create a new data structure that contains the hash of each. We continue doing this until we reach a single block, the root of the tree. For example, suppose we have three data blocks, *a, b, c*. We can generate a merkle tree by doing the following steps: 
 
 *d1 = dhash(a)*
+
 *d2 = dhash(b)*
+
 *d3 = dhash(c)*
+
 *d4 = dhash(c)* *#since we have odd number of blocks, we append it with another c*
 
-*d5 = dhash(d1 concat d2)*
-*d6 = dhash(d3 concat d4)*
+*d5 = dhash(d1 ‖ d2)*
 
-*d7 = dhash(d5 concat d6)*
+*d6 = dhash(d3 ‖ d4)*
+
+*d7 = dhash(d5 ‖ d6)*
 
 Here is graphical example of merkle tree with 8 data blocks.
 <img src="/images/post1/merkle.png" width="500" height="300">
