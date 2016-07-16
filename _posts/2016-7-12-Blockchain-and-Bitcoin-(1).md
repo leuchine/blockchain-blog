@@ -69,7 +69,7 @@ Here is graphical example of merkle tree with 8 data blocks.
 
 Based on the structure of merkle, it can check the membership of data in *O(logn)* time and *O(logn)* space. Here is a nice post from [Quora](https://www.quora.com/Cryptography-How-does-a-Merkle-proof-actually-work) illustrating why. 
 
-### 3 Signatures
+### 3. Signatures
 A digital signature is supposed to be the digital analog to a handwritten signature on paper. We desire two properties from digital signatures that correspond well to the handwritten signature analogy. Firstly, only you can make your signature, but anyone who sees it can verify that it’s valid. Secondly, we want the signature to be tied to a particular document so that the signature cannot be used to indicate your agreement or endorsement of a different document. For handwritten signatures, this latter property is analogous to assuring that somebody can’t take your signature and snip it off one document and glue it onto the bottom of another one.
 
 In practice, the signature is usually implemented as private-public key encryption. The popular algorithm is [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). A digital signature scheme consists of the following three algorithms:
@@ -87,4 +87,4 @@ We require that the following two properties hold:
 With signature, the receiver of the message can verify the validity. 
 
 ### 4. Final remarks
-Given the building blocks of blockchain and bitcoin, in next post, we will introduce the format of blockchain data and other more advanced features.
+Given the building blocks of blockchain and bitcoin, in next post, we will introduce the consensus and decentralisation schemes of blockchain and other more advanced features.
