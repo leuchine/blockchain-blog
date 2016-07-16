@@ -80,7 +80,7 @@ Now, we introduce how the node is chosen through 'mining'. The node is chosen th
 Bitcoin achieves proof-of-work using hash puzzles. In order to create a block, the node that proposes that block is required to find a number, or nonce, such that when you concatenate the nonce, the previous hash, and the list of transactions that comprise that block and take the hash of this whole string, then that hash output should be a number that falls into a target space that is quite small in relation to the much larger output space of that hash function. We can define such a target space as any value falling below a certain target value. In this case, the nonce will have to satisfy the inequality: 
 <center>H(nonce || prev_hash || tx || tx || ... || tx) &lt; target.</center>
 
-The first node which finds this nounce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.
+The first node which finds this nonce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.
 
 ### 4. Final remarks
 This post introduces how Bitcoin achieves concensus and how to choose random node to propose next block. In next post, we will introduce the data format of blocks. 
