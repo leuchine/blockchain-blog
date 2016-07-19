@@ -3,6 +3,17 @@
   
     
     <url>
+      <loc>/2016/07/19/Blockchain-and-Bitcoin-(3).html</loc>
+      
+        <lastmod>2016-07-19T00:00:00+08:00</lastmod>
+      
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
+    </url>
+    
+  
+    
+    <url>
       <loc>/2016/07/16/Blockchain-and-Bitcoin-(2).html</loc>
       
         <lastmod>2016-07-16T00:00:00+08:00</lastmod>
@@ -28,7 +39,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2016-07-16T21:11:09+08:00</lastmod>
+        <lastmod>2016-07-19T20:10:31+08:00</lastmod>
       
       <changefreq>weekly</changefreq>
       <priority>0.5</priority>

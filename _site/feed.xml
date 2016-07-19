@@ -5,9 +5,79 @@
     <description></description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 16 Jul 2016 21:11:09 +0800</pubDate>
-    <lastBuildDate>Sat, 16 Jul 2016 21:11:09 +0800</lastBuildDate>
+    <pubDate>Tue, 19 Jul 2016 20:10:31 +0800</pubDate>
+    <lastBuildDate>Tue, 19 Jul 2016 20:10:31 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Blockchain and Bitcoin (3)</title>
+        <description>&lt;h3 id=&quot;introduction&quot;&gt;1. Introduction&lt;/h3&gt;
+
+&lt;p&gt;In this post, we will look at real data structures of blocks and transactions, real scripts Bitcoin use. Let’s start with transaction structures. The figure below shows the data structure of a transaction.&lt;br /&gt;
+&lt;img src=&quot;/images/post3/transaction.png&quot; width=&quot;500&quot; height=&quot;300&quot; /&gt;&lt;br /&gt;
+To view the real transactions happening in Bitcoin network, some websites can be referred to such as &lt;a href=&quot;https://blockchain.info/&quot;&gt;blockchain.info&lt;/a&gt;. As we can see from the figure, there are three parts to a transaction: some metadata, a series of inputs, and a series of outputs.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Metadata&lt;/em&gt;. There’s some housekeeping information — the size of the transaction, the number of inputs, and the number of outputs. There’s the hash of the entire transaction which serves as a unique ID for the transaction. That’s what allows us to use hash pointers to reference transactions. Finally there’s a “lock_time” field. The way it works is that if you specify any value other than zero for the lock time, it tells miners not to publish the transaction until the specified lock time. The transaction will be invalid before either a specific block number, or a specific point in time, based on the timestamps that are put into blocks. So this is a way of preparing a transaction that can only be spent in the future if it isn’t already spent by then.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Inputs&lt;/em&gt;. The transaction inputs form an array, and each input has the same form. An input specifies a previous transaction, so it contains a hash of that transaction, which acts as a hash pointer to it. The input also contains the index of the previous transaction’s outputs that’s being claimed. And then there’s a signature script: scriptSig which we will talk about it later. Remember that we have to sign to show that we actually have the ability to claim those previous transaction outputs.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Outputs&lt;/em&gt;. The outputs are again an array. Each output has just two fields. They each have a value, and the sum of all the output values has to be less than or equal to the sum of all the input values. If the sum of the output values is less than the sum of the input values, the difference is a transaction fee to the miner who publishes this transaction. The other field is scriptPubKey script.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;bitcoin-scripts&quot;&gt;2. Bitcoin Scripts&lt;/h3&gt;
+&lt;p&gt;In this section, we will talk about the two scripts: scriptSig and scriptPubKey.&lt;/p&gt;
+
+&lt;p&gt;The most common type of transaction in Bitcoin is to redeem a previous transaction output by signing with the correct key. In this case, we want the transaction output to say, “this can be redeemed by a signature from the owner of address X.” An address is a hash of a public key. So merely specifying the address X doesn’t tell us what the public key is, and doesn’t give us a way to check the signature. So instead the transaction output must say “this can be redeemed by a public key that hashes to X, along with a signature from the owner of that public key.”&lt;/p&gt;
+
+&lt;p&gt;We concatenate the two scripts, and the resulting script must run successfully in order for the transaction to be valid. In the simplest case, the scriptPubKey just specifies a public key (or an address to which the public key hashes), and scriptSig specifies a signature with that public key.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/post3/script.png&quot; width=&quot;200&quot; height=&quot;150&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;An example of combined script is shown above. The first part is scriptSig and the second part is scriptPubKey. The script is a stack based language and it does not have loop in it. Thus, we just need to run it line by line to check its validity. There are only two possible outcomes when a Bitcoin script is executed. It either executes successfully with no errors, in which case the transaction is valid. Or, if there’s any error while the script is executing, the whole transaction will be invalid and shouldn’t be accepted into the block chain. Some commonly used commands are shown below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/post3/command.png&quot; width=&quot;500&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To execute a script in a stack-based programming language, all we’ll need is a stack that we can push data to and pop data from. The figure below illustrates what happens to the stack after each operation:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/post3/runtime.png&quot; width=&quot;700&quot; height=&quot;200&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The Bitcoin scripting language is very small. There’s only room for 256 instructions, because each one is represented by one byte. Of those 256, 15 are currently disabled, and 75 are reserved. The reserved instruction codes haven’t been assigned any specific meaning yet, but might be instructions that are added later in time. Although this stack based language is not Turing-complete, it still makes Bitcoin more programmable and flexible. It has many applications such green address, escrow transactions, smart contract…&lt;/p&gt;
+
+&lt;h3 id=&quot;block-structure&quot;&gt;3. Block Structure&lt;/h3&gt;
+&lt;p&gt;The block chain is a clever combination of two different hash-based data structures. The first is a hash chain of blocks. Each block has a block header, a hash pointer to some transaction data, and a hash pointer to the previous block in the sequence. The second data structure is a per-block tree of all of the transactions that are included in that block. This is a Merkle tree and allows us to have a digest of all the transactions in the block in an efficient way. The figure below shows an example:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/post3/blockchain.png&quot; width=&quot;500&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A block in block chain mainly has a header and a list of transactions. The format of the header is shown below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/post3/header.png&quot; width=&quot;500&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The transactions are accumulated in 10 minutes and put into one block for efficiency reasons. There is a special type of transaction called coinbase which is the transaction that generates new Bitcoins. It mostly looks like a normal transaction but with several differences: (1) it always has a single input and a single output, (2) the input doesn’t redeem a previous output and thus contains a null hash pointer, since it is minting new bitcoins and not spending existing coins, (3) the value of the output is currently a little over 25 Bitcoins. The output value is the miner’s revenue from the block. It consists of two components: a flat mining reward, which is set by the system and which halves every 210,000 blocks (about 4 years), and the transaction fees collected from every transaction included in the block. (4) There is a special “coinbase” parameter, which is completely arbitrary — miners can put whatever they want in there.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-remarks&quot;&gt;4. Final remarks&lt;/h3&gt;
+&lt;p&gt;This post introduces how the data structures of Bitcoin transactions and blocks. In next post, we will talk about the security and applications of Blockchain.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 19 Jul 2016 00:00:00 +0800</pubDate>
+        <link>/2016/07/19/Blockchain-and-Bitcoin-(3).html</link>
+        <guid isPermaLink="true">/2016/07/19/Blockchain-and-Bitcoin-(3).html</guid>
+        
+        <category>blockchain</category>
+        
+        <category>bitcoin</category>
+        
+        <category>transaction</category>
+        
+        <category>block-format</category>
+        
+        <category>data-structure</category>
+        
+        
+      </item>
     
       <item>
         <title>Blockchain and Bitcoin (2)</title>
@@ -103,13 +173,14 @@ annoyance. If Bob’s transaction doesn’t make it into the next block that Ali
 
 &lt;h3 id=&quot;pick-up-a-random-node&quot;&gt;3. Pick up a random node&lt;/h3&gt;
 &lt;p&gt;In this section, we will talk about how to randomly choose a node from the network. Nodes in the network are rewarded by being chosen as this node. Thus, this motivates people to get the opportunity for being chosen through ‘mining’. The rewards include the creation of new coins and transaction fees. At the time of this writing, the value of the block reward is fixed at 25 Bitcoins. But it actually halves every 210,000 blocks. Based on the rate of block creation that we will see shortly, this means that the rate drops roughly every four years (because in expection, a new block is generated every 10 minutes). We’re now in the second period. For the first four years of Bitcoin’s existence, the block reward was 50 bitcoins; now it’s 25. The node chosen will get 25 newly created Bitcoins. &lt;br /&gt;
-&lt;img src=&quot;/images/post2/reward.png&quot; width=&quot;500&quot; height=&quot;300&quot; /&gt;&lt;br /&gt;
-Now, we introduce how the node is chosen through ‘mining’. The node is chosen through proof-of-work. The key idea behind proof-of-work is that we approximate the selection of a random node by instead selecting nodes in proportion to a resource that we hope that nobody can monopolize. If, for example, that resource is computing power, then it’s a proof-of-work system.&lt;/p&gt;
+&lt;img src=&quot;/images/post2/reward.png&quot; width=&quot;500&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, we introduce how the node is chosen through ‘mining’. The node is chosen through proof-of-work. The key idea behind proof-of-work is that we approximate the selection of a random node by instead selecting nodes in proportion to a resource that we hope that nobody can monopolize. If, for example, that resource is computing power, then it’s a proof-of-work system.&lt;/p&gt;
 
 &lt;p&gt;Bitcoin achieves proof-of-work using hash puzzles. In order to create a block, the node that proposes that block is required to find a number, or nonce, such that when you concatenate the nonce, the previous hash, and the list of transactions that comprise that block and take the hash of this whole string, then that hash output should be a number that falls into a target space that is quite small in relation to the much larger output space of that hash function. We can define such a target space as any value falling below a certain target value. In this case, the nonce will have to satisfy the inequality:&lt;/p&gt;
 &lt;center&gt;H(nonce || prev_hash || tx || tx || ... || tx) &amp;lt; target.&lt;/center&gt;
 
-&lt;p&gt;The first node which finds this nounce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.&lt;/p&gt;
+&lt;p&gt;The first node which finds this nonce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.&lt;/p&gt;
 
 &lt;h3 id=&quot;final-remarks&quot;&gt;4. Final remarks&lt;/h3&gt;
 &lt;p&gt;This post introduces how Bitcoin achieves concensus and how to choose random node to propose next block. In next post, we will introduce the data format of blocks.&lt;/p&gt;

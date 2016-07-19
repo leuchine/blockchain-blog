@@ -98,12 +98,13 @@ And how do we know if this double spend attempt is going to succeed or not? Well
 3. Pick up a random node
 In this section, we will talk about how to randomly choose a node from the network. Nodes in the network are rewarded by being chosen as this node. Thus, this motivates people to get the opportunity for being chosen through ‘mining’. The rewards include the creation of new coins and transaction fees. At the time of this writing, the value of the block reward is fixed at 25 Bitcoins. But it actually halves every 210,000 blocks. Based on the rate of block creation that we will see shortly, this means that the rate drops roughly every four years (because in expection, a new block is generated every 10 minutes). We’re now in the second period. For the first four years of Bitcoin’s existence, the block reward was 50 bitcoins; now it’s 25. The node chosen will get 25 newly created Bitcoins. 
 
+
 Now, we introduce how the node is chosen through ‘mining’. The node is chosen through proof-of-work. The key idea behind proof-of-work is that we approximate the selection of a random node by instead selecting nodes in proportion to a resource that we hope that nobody can monopolize. If, for example, that resource is computing power, then it’s a proof-of-work system.
 
 Bitcoin achieves proof-of-work using hash puzzles. In order to create a block, the node that proposes that block is required to find a number, or nonce, such that when you concatenate the nonce, the previous hash, and the list of transactions that comprise that block and take the hash of this whole string, then that hash output should be a number that falls into a target space that is quite small in relation to the much larger output space of that hash function. We can define such a target space as any value falling below a certain target value. In this case, the nonce will have to satisfy the inequality:
 H(nonce || prev_hash || tx || tx || ... || tx) &lt; target.
 
-The first node which finds this nounce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.
+The first node which finds this nonce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.
 
 4. Final remarks
 This post introduces how Bitcoin achieves concensus and how to choose random node to propose next block. In next post, we will introduce the data format of blocks.
@@ -283,13 +284,14 @@ annoyance. If Bob’s transaction doesn’t make it into the next block that Ali
 
 <h3 id="pick-up-a-random-node">3. Pick up a random node</h3>
 <p>In this section, we will talk about how to randomly choose a node from the network. Nodes in the network are rewarded by being chosen as this node. Thus, this motivates people to get the opportunity for being chosen through ‘mining’. The rewards include the creation of new coins and transaction fees. At the time of this writing, the value of the block reward is fixed at 25 Bitcoins. But it actually halves every 210,000 blocks. Based on the rate of block creation that we will see shortly, this means that the rate drops roughly every four years (because in expection, a new block is generated every 10 minutes). We’re now in the second period. For the first four years of Bitcoin’s existence, the block reward was 50 bitcoins; now it’s 25. The node chosen will get 25 newly created Bitcoins. <br />
-<img src="/images/post2/reward.png" width="500" height="300" /><br />
-Now, we introduce how the node is chosen through ‘mining’. The node is chosen through proof-of-work. The key idea behind proof-of-work is that we approximate the selection of a random node by instead selecting nodes in proportion to a resource that we hope that nobody can monopolize. If, for example, that resource is computing power, then it’s a proof-of-work system.</p>
+<img src="/images/post2/reward.png" width="500" height="300" /></p>
+
+<p>Now, we introduce how the node is chosen through ‘mining’. The node is chosen through proof-of-work. The key idea behind proof-of-work is that we approximate the selection of a random node by instead selecting nodes in proportion to a resource that we hope that nobody can monopolize. If, for example, that resource is computing power, then it’s a proof-of-work system.</p>
 
 <p>Bitcoin achieves proof-of-work using hash puzzles. In order to create a block, the node that proposes that block is required to find a number, or nonce, such that when you concatenate the nonce, the previous hash, and the list of transactions that comprise that block and take the hash of this whole string, then that hash output should be a number that falls into a target space that is quite small in relation to the much larger output space of that hash function. We can define such a target space as any value falling below a certain target value. In this case, the nonce will have to satisfy the inequality:</p>
 <center>H(nonce || prev_hash || tx || tx || ... || tx) &lt; target.</center>
 
-<p>The first node which finds this nounce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.</p>
+<p>The first node which finds this nonce proposes the block. Thus, in order to be chosen, the node should have a great computing power. The incentive to get Bitcoins flourishes the Bitcoin mining industry.</p>
 
 <h3 id="final-remarks">4. Final remarks</h3>
 <p>This post introduces how Bitcoin achieves concensus and how to choose random node to propose next block. In next post, we will introduce the data format of blocks.</p>
